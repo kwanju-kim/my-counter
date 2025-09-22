@@ -1,29 +1,8 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useCounter } from './hooks/useCounter';
 
 function App() {
-  const [count, setCount] = useState<number>(0);
-  const [inputNumber, setInputNumber] = useState<number>(0);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newNumber = Number(e.target.value);
-    if (!Number.isNaN(newNumber)) {
-      setInputNumber(newNumber);
-    }
-  };
-
-  const setCountAndResetInput = (newCount: number) => {
-    setCount(newCount);
-    setInputNumber(0);
-  };
-
-  const handleIncrement = () => {
-    setCountAndResetInput(count + inputNumber);
-  };
-
-  const handleDecrement = () => {
-    setCountAndResetInput(count - inputNumber);
-  };
+  const { count, inputNumber, handleInputChange, handleIncrement, handleDecrement } = useCounter();
 
   return (
     <AppContainer>
