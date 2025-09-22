@@ -2,7 +2,17 @@ import styled from '@emotion/styled';
 import { useCounter } from './hooks/useCounter';
 
 function App() {
-  const { count, inputNumber, handleInputChange, handleIncrement, handleDecrement } = useCounter();
+  const {
+    count,
+    inputNumber,
+    handleInputChange,
+    handleIncrement,
+    handleDecrement,
+    handleUndo,
+    handleRedo,
+    canUndo,
+    canRedo
+  } = useCounter();
 
   return (
     <AppContainer>
@@ -14,7 +24,7 @@ function App() {
         <StyledInput value={inputNumber} onChange={handleInputChange} />
       </CounterContainer>
       <FooterContainer>
-        <CircleButton>
+        <CircleButton onClick={handleUndo} disabled={!canUndo}>
           <ActionText>⇦</ActionText>
         </CircleButton>
         <CircleButton onClick={handleIncrement}>
@@ -23,7 +33,7 @@ function App() {
         <CircleButton onClick={handleDecrement}>
           <ActionText>-</ActionText>
         </CircleButton>
-        <CircleButton>
+        <CircleButton onClick={handleRedo} disabled={!canRedo}>
           <ActionText>⇨</ActionText>
         </CircleButton>
       </FooterContainer>
@@ -92,11 +102,16 @@ const CircleButton = styled.button`
   color: white;
   cursor: pointer;
   border: none;
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: #6f73e4;
   }
-  &:active {
+  &:active:not(:disabled) {
     background-color: #464cf0;
+  }
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 `;
 
